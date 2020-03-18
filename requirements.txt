@@ -1,4 +1,5 @@
 git+https://github.com/kevinha298/Scalper
+utils
 python-dotenv
 bs4
 requests
