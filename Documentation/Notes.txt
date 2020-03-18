@@ -1,5 +1,6 @@
 
-
+Added Alplaca API connection to the AlpacaCon
+Created AlpacaConnection branch                             20200318
 Pushed initial repository from local to remote              20200317
 Created remote repository on Github                         20200317
 Committed intial check in on local repository               20200317
