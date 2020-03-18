@@ -1,4 +1,4 @@
-git+https://github.com/kevinha298/Scalp.py
+git+https://github.com/kevinha298/Scalper/blob/master/Scalp.py
 python-dotenv
 bs4
 requests
