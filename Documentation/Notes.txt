@@ -1,0 +1,11 @@
+
+
+Pushed initial repository from local to remote              20200317
+Created remote repository on Github                         20200317
+Committed intial check in on local repository               20200317
+Installed and configured dotenv                             20200317
+Created Requirements file                                   20200317
+Created .gitignore                                          20200317
+Created local GIT repository                                20200317
+Created virtual environment                                 20200317
+Created project shell                                       20200317
