@@ -1,2 +1,8 @@
+python-utils
+python-dotenv
+bs4
+requests
+lxml
 alpaca_trade_api
-
+mysql-connector
+mysql-connector-python
