@@ -1,6 +1,6 @@
 import alpaca_trade_api as tradeapi
 from dateutil import tz
-#import Database as db
+import Database as db
 #import GetRealTimeQuote as realtime
 import datetime
 import time
@@ -16,9 +16,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 api = tradeapi.REST(
-    key_id=os.getenv('ALPACA_ID'),
-    secret_key=os.getenv('ALPACA_KEY'),
-    base_url='https://paper-api.alpaca.markets'
+    key_id = os.getenv('ALPACA_ID'),
+    secret_key = os.getenv('ALPACA_KEY'),
+    base_url = 'https://paper-api.alpaca.markets'
 )
 print(str(datetime.now()) + ': Established API connection.')
 
@@ -31,4 +31,7 @@ print(f'Current clock timestamp: {now}')
 from_zone = tz.gettz('UTC')
 to_zone = tz.gettz('America/New_York')
 
+db_conn = db.connect()
+
+db.insert_run_log(db_conn, str(datetime.now()), 'Test database connection.', '', '')
 

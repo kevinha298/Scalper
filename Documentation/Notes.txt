@@ -1,5 +1,12 @@
 
-Added Alplaca API connection to the AlpacaCon
+Pushed updated repository to Heroku                         
+Pushed updated repository to Github                         
+Added logic to connect to MySQL datqabase                   
+Created MySQLConnection branch                              20200319
+Tested application on Heroku                                20200318
+Pushed updated repository to Heroku                         20200318
+Pushed updated repository to Github                         20200318
+Added Alplaca API connection to the AlpacaConnection branch 20200318
 Created AlpacaConnection branch                             20200318
 Pushed initial repository from local to remote              20200317
 Created remote repository on Github                         20200317
