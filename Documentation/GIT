@@ -1,0 +1,57 @@
+--create a local working branch
+git branch DatabaseConnection
+git branch 
+git branch -a
+
+git checkout calc-subract
+git branch
+--made some changes in the local working branch
+git diff
+git status
+
+git add -A
+git status
+
+git commit -m "Subract Function"
+git status
+
+--pushing local working branch to remote repository for testing
+git push -u origin DatabaseConnection
+git branch -a
+
+--after successful testing of the changes in the working branch on remote repository, we are ready to merge the changes in the local working branch into the local master branch 
+git checkout master
+git branch 
+
+--pulling the latest updates from remote master branch into the local master branch
+git pull origin master
+
+--checking to see which branch had already merged into the local master branch
+git branch --merged
+
+--merging changes from the local working branch in to local master branch
+git merge DatabaseConnection
+
+--checking to see which branch had already merged into the local master branch
+git branch --merged
+
+--pushing changes from local master branch to remote master branch
+git push origin master
+
+--delete local working branch 
+git branch -a
+git branch -d calc-subract
+git branch -a
+
+--delete remote working branch
+git push origin --delete DatabaseConnection
+git branch -a 
+
+--Using Heroku CLI to commit changes local master branch to local Heroku branch:
+git commit -am "Put comments for code changes here."
+
+--Using Heroku CLI to add all (.) files from local Heroku branch to staging area to be pushed to remote Heroku:
+git add .
+
+--Using Heroku CLI to push changes from local Heroku staging to remote Heroku branch:
+git push heroku master
