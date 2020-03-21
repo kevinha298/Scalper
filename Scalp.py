@@ -1,7 +1,7 @@
 import alpaca_trade_api as tradeapi
 from dateutil import tz
 import Database as db
-#import GetRealTimeQuote as realtime
+import GetRealTimeQuote as realtime
 import datetime
 import time
 from ast import literal_eval
@@ -9,8 +9,8 @@ import dateutil.parser
 from datetime import datetime
 from pytz import timezone
 import random
-#import SubmitBuyOrder as bo
-#import SubmitSellOrder as so
+import SubmitBuyOrder as bo
+import SubmitSellOrder as so
 import os
 from dotenv import load_dotenv
 load_dotenv()
