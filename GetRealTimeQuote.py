@@ -4,9 +4,12 @@ from bs4 import BeautifulSoup
 import datetime
 import Database as db
 from datetime import datetime
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
 def parsePrice(symbol, lapse):
-    iex_api_key = 'sk_7435bdd8a15b4362b04413e189755203'
+    iex_api_key = os.getenv('IEX_API_KEY')
     last_sale_price = 1000  # default last sale price
     if lapse % 3 == 0:
         url = f'https://finance.yahoo.com/quote/{symbol}?p={symbol}'
