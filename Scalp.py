@@ -41,6 +41,7 @@ def app_run_cond():
         run_app = True if config[0] == 'is_app_active' and int(config[1]) == 1 and datetime.today().weekday() < 6 and clock.is_open else False
     return run_app
 
+order_keys = ['asset_class', 'asset_id', 'canceled_at', 'client_order_id', 'created_at', 'expired_at', 'failed_at', 'filled_at', 'filled_avg_price', 'filled_qty', 'id', 'limit_price', 'order_type', 'qty', 'side', 'status', 'stop_price', 'submitted_at', 'symbol', 'time_in_force', 'type', 'updated_at']
 lapse = 0
 while app_run_cond():
     lapse += 1
@@ -60,7 +61,8 @@ while app_run_cond():
             filled_at_east_std_time = str(filled_at.astimezone(to_zone))[:-6]
             order_values = ''
             for keys,values in order.items():
-                order_values += f"'{values}',"
+                if keys in order_keys:
+                    order_values += f"'{values}',"
             order_values = f"{order_values}'{filled_at_east_std_time}'"
             insert_values += f"({order_values}),"
         # db.insert_run_log(db_conn, str(datetime.now()), 'Retrieved all recent orders data from API.', NULL, NULL)
@@ -101,7 +103,7 @@ while app_run_cond():
         # db.insert_run_log(db_conn, str(datetime.now()), 'Updated database queue for future buy orders to submit to API.', NULL, NULL)
         print(str(datetime.now()) + ': Updated database queue for future buy orders to submit to API.')
 
-        time.sleep(3)
+        time.sleep(6)
 
     sell_order = db.order_rule(db_conn,'sell')
     buy_order = db.order_rule(db_conn,'buy')

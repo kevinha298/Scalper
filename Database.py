@@ -14,7 +14,7 @@ def connect():
 
 def insert_filled_order(db_conn, value):
     insert = "INSERT INTO filled_order_stage (asset_class, asset_id, canceled_at, client_order_id, created_at, expired_at, failed_at, filled_at, filled_avg_price, " \
-             "filled_qty, id, limit_price, order_type, qty, side,  status, stop_price, submitted_at, symbol, time_in_force, type, updated_at, filled_at_east_std_time)"
+             "filled_qty, id, limit_price, order_type, qty, side, status, stop_price, submitted_at, symbol, time_in_force, type, updated_at, filled_at_east_std_time)"
     add_filled_order = f'{insert} values {value}'
     cursor = db_conn.cursor()
     cursor.execute(add_filled_order)

@@ -11,24 +11,26 @@ load_dotenv()
 def parsePrice(symbol, lapse):
     iex_api_key = os.getenv('IEX_API_KEY')
     last_sale_price = 1000  # default last sale price
-    if lapse % 3 == 0:
+    if lapse % 2 == 0:
         url = f'https://finance.yahoo.com/quote/{symbol}?p={symbol}'
         r = requests.get(url)
-        soup = bs4.BeautifulSoup(r.text, features="xml")
+        soup = bs4.BeautifulSoup(r.text, features="lxml")
         try:
             last_sale_price = soup.find_all('div',{'class':'My(6px) Pos(r) smartphone_Mt(6px)'})[0].find('span').text
-            prev_close = soup.find_all('table', {'class': 'W(100%)'})[0].find('span', class_="Trsdu(0.3s) ").text
+            prev_close = soup.find_all('table', {'class': 'W(100%)'})[0].text
+            prev_close = prev_close[14:prev_close.find('Open')]
             price_and_percent_change = str(soup.find_all('div', {'class': 'My(6px) Pos(r) smartphone_Mt(6px)'})[0].find_all('span')[1].text)
             percent_change = price_and_percent_change[price_and_percent_change.find('(') + 1:-2]
             percent_change = float(percent_change.replace('+', ''))
-            day_range = soup.find_all('div', {'class': 'D(ib) W(1/2) Bxz(bb) Pend(12px) Va(t) ie-7_D(i) smartphone_D(b) smartphone_W(100%) smartphone_Pend(0px) smartphone_BdY smartphone_Bdc($c-fuji-grey-c)'})[0].find_all('td')[9].text
-            day_high = str(day_range)[0:day_range.find('-') - 1]
-            day_low = str(day_range)[day_range.find('-') + 2:]
+            #day_range = soup.find_all('div', {'class': 'D(ib) W(1/2) Bxz(bb) Pend(12px) Va(t) ie-7_D(i) smartphone_D(b) smartphone_W(100%) smartphone_Pend(0px) smartphone_BdY smartphone_Bdc($c-fuji-grey-c)'})[0].find_all('td')[9].text
+            day_range = soup.find_all('div', {'class': 'D(ib) W(1/2) Bxz(bb) Pend(12px) Va(t) ie-7_D(i) smartphone_D(b) smartphone_W(100%) smartphone_Pend(0px) smartphone_BdY smartphone_Bdc($seperatorColor)'})[0].find_all('td')[9].text
+            day_low = str(day_range)[0:day_range.find('-') - 1]
+            day_high = str(day_range)[day_range.find('-') + 2:]
         except Exception as error:
             db_conn = db.connect()
             db.insert_run_log(db_conn, str(datetime.now()), f'Encountered an exception when trying to retrieve price for {symbol} from Yahoo.', error, soup)
         print(f'Yahoo: symbol = {symbol},  price = {last_sale_price}')
-    elif lapse % 3 == 1:
+    elif lapse % 2 == 10:
         url = f'https://www.nasdaq.com/symbol/{symbol}/real-time'
         url_quote = f'https://www.nasdaq.com/symbol/{symbol}'
         r = requests.get(url)
@@ -54,14 +56,14 @@ def parsePrice(symbol, lapse):
             db_conn = db.connect()
             db.insert_run_log(db_conn, str(datetime.now()),f'Encountered an exception when trying to retrieve price for {symbol} from Nasdaq.',error, soup)
         print(f'Nasdaq: symbol = {symbol},  price = {last_sale_price}')
-    elif lapse % 3 == 2:
+    elif lapse % 2 == 1:
         url = f'https://cloud.iexapis.com/stable/stock/{symbol}/quote?token={iex_api_key}'
         try:
             r = requests.get(url)
             r_json = r.json()
             last_sale_price = r_json['latestPrice']
             percent_change = float(r_json['changePercent'] * 100)
-            day_low = r_json['low']
+            day_low = r_json['low'] if r_json['low'] == 'None' else last_sale_price
         except Exception as error:
             db_conn = db.connect()
             db.insert_run_log(db_conn, str(datetime.now()), f'Encountered an exception when trying to retrieve price for {symbol} from IEX.', error, url)
